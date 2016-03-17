@@ -1,0 +1,12 @@
+# This file is controlled by Juju. Hand edits will not persist!
+interfaces:
+  device: {{ device }}
+protocols:
+  {% for protocol in protocols -%}
+  {{ protocol }}: [{{protocol.ports}}]
+  {% endif %}
+{% if elasticsearch -%}
+output:
+  elasticsearch:
+    hosts: {{ elasticsearch }}
+{% endif -%}
