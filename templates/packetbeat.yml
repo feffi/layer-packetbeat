@@ -4,7 +4,7 @@ interfaces:
 protocols:
   {% for protocol in protocols -%}
   {{ protocol }}: [{{protocol.ports}}]
-  {% endif %}
+  {% endfor %}
 {% if elasticsearch -%}
 output:
   elasticsearch:

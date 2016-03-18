@@ -13,12 +13,12 @@ from elasticbeats import enable_beat_on_boot
 from elasticbeats import push_beat_index
 
 
-@when('beat.repo.available')
+@when('beats.repo.available')
 @when_not('packetbeat.installed')
 def install_packetbeat():
     status_set('maintenance', 'Installing packetbeat')
     apt_install(['packetbeat'], fatal=True)
-    set_state('filebeat.installed')
+    set_state('packetbeat.installed')
 
 
 @when('beat.render')
@@ -49,5 +49,9 @@ def enlist_packetbeat():
 
 @when('elasticsearch.available')
 @when_not('packetbeat.index.pushed')
-def push_packetbeat_index():
-    push_beat_index('packetbeat')
+def push_packetbeat_index(elasticsearch):
+    hosts = elasticsearch.list_unit_data()
+    for host in hosts:
+        host_string = "{}:{}".format(host['host'], host['port'])
+    push_beat_index(host_string, 'packetbeat')
+    set_state('packetbeat.index.pushed')
