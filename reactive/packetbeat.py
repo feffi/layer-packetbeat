@@ -23,7 +23,7 @@ def install_packetbeat():
 
 @when('beat.render')
 def render_packetbeat_template():
-    render_without_context('packetbeat.yml', '/etc/filebeat/packetbeat.yml')
+    render_without_context('packetbeat.yml', '/etc/packetbeat/packetbeat.yml')
     remove_state('beat.render')
     status_set('active', 'Packetbeat ready')
 
