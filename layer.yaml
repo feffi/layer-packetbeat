@@ -1,1 +1,2 @@
+repo: https://github.com/juju-solutions/layer-packetbeat.git
 includes: ['layer:beats-base'] 
