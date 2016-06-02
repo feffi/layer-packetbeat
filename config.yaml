@@ -10,7 +10,8 @@ options:
   device:
     type: string
     default: any
-    description: Device to listen on, eg eth0
+    description: |
+      Device to listen on, eg eth0 is typically 0. See readme for more details.
   protocols:
     type: string
     description: |

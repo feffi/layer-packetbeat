@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -eux
+
+INTERFACES=$(/usr/bin/packetbeat -devices)
+
+action-set data.interfaces=$INTERFACES

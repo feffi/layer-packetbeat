@@ -24,7 +24,7 @@ packetbeat and Logstash
 ### Deploying the minimal Beats formation
 
 If you do not need log buffering and alternate transforms on your data thats
-being shipped to ElasticSearch you can simply deploy the 'beats-base' bundle
+being shipped to ElasticSearch you can simply deploy the 'beats-core' bundle
 which stands up Elasticsearch, Kibana, and the three known working Beats
 subordinate services.
 
@@ -44,6 +44,16 @@ principal services using the CLI
 
 ### Changing whats being shipped
 
+The charm supports configuration as `service:port` pairs. This is translated
+by packetbeat into the correct "sniffers". Only packets for the service type
+being transmit on the corresponding port will be shipped to the related
+applications.
+
+eg:
+
+    juju set packetbeat protocols="http:80 http:8080 http:9000"
+
+to listen only for http traffic, on ports 80, 8080, and 9000
 
 ## Testing the deployment
 
