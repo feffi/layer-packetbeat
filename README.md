@@ -16,7 +16,7 @@ packetbeat and Logstash
 
     juju deploy cs:~containers/bundle/elk-stack
     juju deploy cs:trusty/consul
-    juju deploy ~containers/trusty/packetbeat
+    juju deploy cs:trusty/packetbeat
     juju add-relation packetbeat:beats-host consul
     juju add-relation packetbeat logstash
 
@@ -28,7 +28,7 @@ being shipped to ElasticSearch you can simply deploy the 'beats-base' bundle
 which stands up Elasticsearch, Kibana, and the three known working Beats
 subordinate services.
 
-    juju deploy ~containers/bundle/beats-core
+    juju deploy cs:bundle/beats-core
     juju deploy ubuntu
     juju add-relation filebeat:beats-host ubuntu
     juju add-relation topbeat:beats-host ubuntu
