@@ -16,4 +16,4 @@ options:
     description: |
       the ports on which Packetbeat can find each protocol. space
       separated protocol:port format.
-    default: "http:80 http:8080 dns:53 pgsql:5432 redis:6379 thrift:9090 mongodb:27017"
+    default: "http:80 http:8080 dns:53 mysql:3306 pgsql:5432 redis:6379 thrift:9090 mongodb:27017 memcached:11211"
