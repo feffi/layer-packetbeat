@@ -5,4 +5,5 @@ description: |
   data shipper that integrates with Elasticsearch to provide real-time analytics
   for web, database, and other network protocols
 series:
+  - xenial
   - trusty
