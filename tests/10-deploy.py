@@ -15,6 +15,7 @@ class TestPacketbeat(unittest.TestCase):
 
         cls.deployment.add('ubuntu')
         cls.deployment.add('packetbeat')
+        cls.deployment.relate('ubuntu:juju-info', 'packetbeat:beats-host')
 
         try:
             cls.deployment.setup(timeout=seconds)
@@ -24,7 +25,7 @@ class TestPacketbeat(unittest.TestCase):
             amulet.raise_status(amulet.SKIP, msg=message)
         except:
             raise
-        cls.unit = cls.d.sentry['packetbeat'][0]
+        cls.unit = cls.deployment.sentry['packetbeat'][0]
 
     def test_packetbeat_binary(self):
         """Verify that the packetbeat binary is installed, on the path and is
@@ -41,3 +42,7 @@ class TestPacketbeat(unittest.TestCase):
         if code != 0:
             message = 'Packetbeat unable to find devices.'
             amulet.raise_status(amulet.FAIL, msg=message)
+
+
+if __name__ == '__main__':
+    unittest.main()
