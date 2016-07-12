@@ -1,9 +1,9 @@
 name: packetbeat
-summary: Deploys packetbeat
+summary: Real-Time Network Packet Analytics
 maintainer: Charles Butler <charles.butler@canonical.com>
 description: |
-  data shipper that integrates with Elasticsearch to provide real-time analytics
-  for web, database, and other network protocols
+  An open source data shipper that integrates with Elasticsearch to provide 
+  real-time network analytics for web, database, and other network protocols.
 series:
   - xenial
   - trusty
