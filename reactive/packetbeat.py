@@ -4,13 +4,16 @@ from charms.reactive import when_not
 from charms.reactive import when_any
 from charms.reactive import set_state
 from charms.reactive import remove_state
+from charms.reactive import hook
 
 from charmhelpers.core.hookenv import status_set
-from charmhelpers.core.host import service_restart
+from charmhelpers.core.host import service_restart, service_stop
 
 from elasticbeats import render_without_context
 from elasticbeats import enable_beat_on_boot
 from elasticbeats import push_beat_index
+
+import os
 
 
 @when_not('apt.installed.packetbeat')
@@ -43,3 +46,13 @@ def push_packetbeat_index(elasticsearch):
         host_string = "{}:{}".format(host['host'], host['port'])
     push_beat_index(host_string, 'packetbeat')
     set_state('packetbeat.index.pushed')
+
+
+@hook('stop')
+def remove_packetbeat():
+    service_stop('packetbeat')
+    try:
+        os.remove('/etc/packetbeat/packetbeat.yml')
+    except OSError:
+        pass
+    charms.apt.purge('packetbeat')
