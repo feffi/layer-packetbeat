@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+
+import amulet
+import unittest
+import time
+
+
+class TestCharm(unittest.TestCase):
+    def setUp(self):
+        self.d = amulet.Deployment(series='trusty')
+        self.d.add('ubuntu', 'cs:trusty/ubuntu')
+        self.d.add('kafka', 'cs:trusty/kafka')
+        self.d.add('zookeeper', 'cs:trusty/zookeeper')
+        self.d.add('packetbeat')
+        self.d.relate('kafka', 'zookeeper')
+        self.d.relate('packetbeat:beats-host', 'ubuntu:juju-info')
+        self.d.relate('packetbeat:elasticsearch', 'elasticsearch:client')
+
+        self.d.setup(timeout=1200)
+        self.d.sentry.wait()
+
+        self.elasticsearch = self.d.sentry['kafka'][0]
+        self.packetbeat = self.d.sentry['packetbeat'][0]
+
+    def test_kafka_host_in_templating(self):
+        kafka_address = self.elasticsearch.relation('client', 'packetbeat:kafka')['private-address']  # noqa
+        config = self.packetbeat.file_contents('/etc/packetbeat/packetbeat.yml')
+        self.assertTrue(kafka_address in config)
+
+if __name__ == "__main__":
+    unittest.main()
