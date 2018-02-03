@@ -11,6 +11,11 @@ output:
   elasticsearch:
     hosts: {{ elasticsearch }}
 {% endif -%}
+{% if logstash -%}
+output:
+  logstash:
+    hosts: {{ logstash }}
+{% endif -%}
 {% if kafka or kafka_hosts%}
   kafka:
     hosts:
